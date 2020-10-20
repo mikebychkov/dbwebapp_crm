@@ -1,25 +1,26 @@
 package com.control;
 
-import com.store.CustomerDB;
+import com.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private CustomerDB store;
+    private CustomerService service;
 
     @Autowired
-    public CustomerController(CustomerDB store) {
-        this.store = store;
+    public CustomerController(CustomerService service) {
+        this.service = service;
     }
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public String listCustomers(Model model) {
-        model.addAttribute("customer_list", store.getCustomers());
+        model.addAttribute("customer_list", service.getCustomers());
         return "list-customers";
     }
 }
