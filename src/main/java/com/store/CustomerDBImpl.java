@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -31,6 +32,33 @@ public class CustomerDBImpl implements CustomerDB {
         try (Session session = sf.openSession()) {
             Query<Customer> q = session.createQuery("FROM Customer", Customer.class);
             return q.list();
+        }
+    }
+
+    @Override
+    public Customer save(Customer customer) {
+        try (Session session = sf.openSession()) {
+            session.save(customer);
+        }
+        return customer;
+    }
+
+    @Override
+    public Customer update(Customer customer) {
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            session.update(customer);
+            session.getTransaction().commit();
+        }
+        return customer;
+    }
+
+    @Override
+    public void delete(Customer customer) {
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            session.delete(customer);
+            session.getTransaction().commit();
         }
     }
 }

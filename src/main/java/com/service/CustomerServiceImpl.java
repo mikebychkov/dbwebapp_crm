@@ -18,15 +18,32 @@ public class CustomerServiceImpl implements CustomerService {
         this.store = store;
     }
 
-    @Override
     @Transactional
+    @Override
     public Customer getCustomer(int id) {
         return store.getCustomer(id);
     }
 
-    @Override
     @Transactional
+    @Override
     public List<Customer> getCustomers() {
         return store.getCustomers();
+    }
+
+    @Transactional
+    @Override
+    public Customer save(Customer customer) {
+        if (customer.getId() == 0) {
+            store.save(customer);
+        } else {
+            store.update(customer);
+        }
+        return customer;
+    }
+
+    @Transactional
+    @Override
+    public void delete(Customer customer) {
+        store.delete(customer);
     }
 }
