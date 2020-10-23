@@ -30,7 +30,7 @@ public class CustomerDBImpl implements CustomerDB {
     @Override
     public List<Customer> getCustomers() {
         try (Session session = sf.openSession()) {
-            Query<Customer> q = session.createQuery("FROM Customer", Customer.class);
+            Query<Customer> q = session.createQuery("FROM Customer ORDER BY lastName", Customer.class);
             return q.list();
         }
     }
@@ -54,11 +54,33 @@ public class CustomerDBImpl implements CustomerDB {
     }
 
     @Override
+    public Customer saveOrUpdate(Customer customer) {
+        Session currSession = sf.getCurrentSession();
+        currSession.saveOrUpdate(customer);
+        return customer;
+    }
+
+    @Override
     public void delete(Customer customer) {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             session.delete(customer);
             session.getTransaction().commit();
         }
+    }
+
+    @Override
+    public void deleteWithACurrentSession(Customer customer) {
+        Session currSession = sf.getCurrentSession();
+        currSession.delete(customer);
+    }
+
+    @Override
+    public void deleteWithACurrentSession(int id) {
+        Session currSession = sf.getCurrentSession();
+        //currSession.delete(currSession.get(Customer.class, id));
+        Query<Customer> q = currSession.createQuery("DELETE FROM Customer WHERE id=:id");
+        q.setParameter("id", id);
+        q.executeUpdate();
     }
 }
