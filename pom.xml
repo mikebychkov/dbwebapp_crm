@@ -162,6 +162,12 @@
       <version>5.4.21.Final</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.6</version>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
 
 </project>
