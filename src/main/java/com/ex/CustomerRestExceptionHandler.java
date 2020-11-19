@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class CustomerRestExceptionHandler {
 
-    /*
     @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException ex) {
+    public ResponseEntity<CustomerErrorResponse> handleException(CustomerNotFoundException ex) {
 
-        StudentErrorResponse error = new StudentErrorResponse();
+        CustomerErrorResponse error = new CustomerErrorResponse();
 
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(ex.getMessage());
@@ -22,9 +21,9 @@ public class CustomerRestExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(Exception ex) {
+    public ResponseEntity<CustomerErrorResponse> handleException(Exception ex) {
 
-        StudentErrorResponse error = new StudentErrorResponse();
+        CustomerErrorResponse error = new CustomerErrorResponse();
 
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(ex.getMessage());
@@ -32,5 +31,4 @@ public class CustomerRestExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-    */
 }

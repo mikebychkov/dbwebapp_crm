@@ -1,5 +1,6 @@
 package com.rest;
 
+import com.ex.CustomerNotFoundException;
 import com.model.Customer;
 import com.service.CustomerService;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +35,9 @@ public class CustomerRestController {
 
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.GET)
     public Customer getById(@PathVariable int id) {
-        return service.getCustomer(id);
+        Customer rsl = service.getCustomer(id);
+        if(rsl == null) throw new CustomerNotFoundException("Not found customer by id: " + id);
+        return rsl;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.PUT)
