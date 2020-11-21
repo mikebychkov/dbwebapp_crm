@@ -24,8 +24,10 @@ public class CustomerRestController {
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
-    public void create(@RequestBody Customer customer) {
+    public Customer create(@RequestBody Customer customer) {
+        customer.setId(0);
         service.save(customer);
+        return customer;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
@@ -41,12 +43,16 @@ public class CustomerRestController {
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.PUT)
-    public void update(@RequestBody Customer customer) {
+    public Customer update(@RequestBody Customer customer) {
         service.save(customer);
+        return customer;
     }
 
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable int id) {
+    public String delete(@PathVariable int id) {
+        Customer rsl = service.getCustomer(id);
+        if(rsl == null) throw new CustomerNotFoundException("Not found customer by id: " + id);
         service.delete(id);
+        return "Deleted customer with id: " + id;
     }
 }
